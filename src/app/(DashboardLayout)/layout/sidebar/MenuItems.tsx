@@ -13,6 +13,18 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
+    title: "Doctor Assigned",
+    icon: IconHome,
+    href: "/doctor-assigned",
+  },
+  {
+    id: uniqueId(),
+    title: "Dashboard",
+    icon: IconHome,
+    href: "/",
+  },
+  {
+    id: uniqueId(),
     title: "Users",
     icon: IconUsers,
     href: "/users",
