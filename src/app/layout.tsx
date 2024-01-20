@@ -1,7 +1,4 @@
 "use client";
-import { baselightTheme } from "@/utils/theme/DefaultColors";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 
 export default function RootLayout({
   children,
@@ -11,10 +8,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider theme={baselightTheme}>
-          <CssBaseline />
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );
