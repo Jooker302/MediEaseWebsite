@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link"
 // import SignInImage as '../../../public/auth/images/signin-image.jpg';
 
 function Login() {
@@ -16,9 +17,8 @@ function Login() {
                 alt="Sign Up Project"
               />
             </figure>
-            <a href="#" className="signup-image-link">
-              Create an account
-            </a>
+            
+            <Link href="/register" style={{ ["color" as any]: "#ffffff" }}>Doctor Registration</Link>
           </div>
 
           <div className="signin-form">
@@ -46,20 +46,7 @@ function Login() {
                   placeholder="Password"
                 />
               </div>
-              <div className="form-group">
-                <input
-                  type="checkbox"
-                  name="remember-me"
-                  id="remember-me"
-                  className="agree-term"
-                />
-                <label htmlFor="remember-me" className="label-agree-term">
-                  <span>
-                    <span></span>
-                  </span>
-                  Remember me
-                </label>
-              </div>
+              
               <div className="form-group form-button">
                 <input
                   type="submit"
