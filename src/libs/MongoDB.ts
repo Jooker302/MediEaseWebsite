@@ -8,7 +8,7 @@ const MongoDB = async () => {
 
         await mongoose.connect(process.env.MONGOURI);
 
-        console.log("MongoDB connected successfully");
+        // console.log("MongoDB connected successfully");
     
 };
 

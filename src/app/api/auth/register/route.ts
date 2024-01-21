@@ -30,7 +30,7 @@ export const POST = async (req: any) => {
       password: hashedPassword,
       image,
     });
-
+    // console.log(newUser);
     await newUser.save();
 
     
