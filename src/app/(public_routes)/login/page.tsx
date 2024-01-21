@@ -28,7 +28,9 @@ function Login(props : Props) {
       callbackUrl: props.callBackUrl ?? "http://localhost:3000/",
     });
 
-    console.log(result);
+
+
+    // console.log(result);
   };
 
   return (

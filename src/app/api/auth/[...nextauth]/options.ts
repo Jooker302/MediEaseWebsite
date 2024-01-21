@@ -28,6 +28,10 @@ export const options: NextAuthOptions = {
         if (!user) {
           throw new Error("User not registered");
         }
+        if (user.role !== "Admin"){
+          throw new Error("Admin Allowed Only");
+          // notFound()
+        }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
@@ -49,9 +53,9 @@ export const options: NextAuthOptions = {
         token.role = user.role
       }
 
-      if (trigger === 'update' || session?.role || session?.name || session?.username) {
+      if (trigger === 'update' || session?.role || session?.name || session?.email) {
         console.log("Trigger update")
-        token.username = session.username
+        token.email = session.email
         token.firstName = session.name
         token.role = session.role
       }
