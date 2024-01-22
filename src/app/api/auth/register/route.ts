@@ -35,7 +35,7 @@ export const POST = async (req: any) => {
 
     
 
-    return new Response(JSON.stringify({ message: "User Registered Success!" }), { status: 201 });
+    return new Response(JSON.stringify({ message: "User Registered Success!" }), { status: 200 });
   } catch (err) {
     console.log(err);
     return new Response(JSON.stringify({ message: "Failed to create User" }), { status: 500 });

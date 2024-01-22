@@ -20,7 +20,8 @@ import { styled } from "@mui/material/styles";
 import SelectInput from "@mui/material/Select/SelectInput";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useState } from 'react';
-import ToastContainer, { toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 // import InputLabel from '@mui/material/InputLabel';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -74,7 +75,7 @@ const UserAdd = () => {
 
     try {
       // Example handling response in client code
-      const response = await fetch('/api/auth/register', {
+      const response = fetch('/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,14 +89,35 @@ const UserAdd = () => {
           role,
           name,
         }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(response.statusText);
+          }
+        })
+        .then((responseData) => {
+          console.log(responseData);
+          // toast.success('User added successfully');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          // toast.error('Error adding user');
+        });
+  
+      toast.promise(response, {
+        loading: 'Adding user...',
+        success: 'User added successfully',
+        error: 'Error adding user',
       });
 
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
-      } else {
-        console.error('Error:', response.statusText);
-      }
+      // if (response.ok) {
+      //   const responseData = await response.json();
+      //   console.log(responseData);
+      // } else {
+      //   console.error('Error:', response.statusText);
+      // }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -193,7 +215,7 @@ const UserAdd = () => {
             </Button>
           </>
         </BaseCard>
-        <ToastContainer position="bottom-right" />
+        <Toaster position="top-right"/>
       </Grid>
       
     </Grid>

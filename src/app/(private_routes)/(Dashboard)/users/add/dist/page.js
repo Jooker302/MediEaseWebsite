@@ -80,60 +80,69 @@ var UserAdd = function () {
         }
     };
     var handleAdd = function (e) { return __awaiter(void 0, void 0, void 0, function () {
-        var formData, response, responseData, error_1;
+        var formData, response;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    e.preventDefault();
-                    console.log("Name:", name);
-                    console.log("Email:", email);
-                    console.log("Password:", password);
-                    console.log("Gender:", gender);
-                    console.log("Age:", age);
-                    console.log("Image: ", image);
-                    formData = new FormData();
-                    formData.append("name", name);
-                    formData.append("email", email);
-                    formData.append("password", password);
-                    formData.append("gender", gender);
-                    formData.append("age", age);
-                    formData.append("image", image);
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 6, , 7]);
-                    return [4 /*yield*/, fetch('/api/auth/register', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                password: password,
-                                image: image,
-                                email: email,
-                                age: age,
-                                gender: gender,
-                                role: role,
-                                name: name
-                            })
-                        })];
-                case 2:
-                    response = _a.sent();
-                    if (!response.ok) return [3 /*break*/, 4];
-                    return [4 /*yield*/, response.json()];
-                case 3:
-                    responseData = _a.sent();
+            e.preventDefault();
+            console.log("Name:", name);
+            console.log("Email:", email);
+            console.log("Password:", password);
+            console.log("Gender:", gender);
+            console.log("Age:", age);
+            console.log("Image: ", image);
+            formData = new FormData();
+            formData.append("name", name);
+            formData.append("email", email);
+            formData.append("password", password);
+            formData.append("gender", gender);
+            formData.append("age", age);
+            formData.append("image", image);
+            try {
+                response = fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        password: password,
+                        image: image,
+                        email: email,
+                        age: age,
+                        gender: gender,
+                        role: role,
+                        name: name
+                    })
+                })
+                    .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    else {
+                        throw new Error(response.statusText);
+                    }
+                })
+                    .then(function (responseData) {
                     console.log(responseData);
-                    return [3 /*break*/, 5];
-                case 4:
-                    console.error('Error:', response.statusText);
-                    _a.label = 5;
-                case 5: return [3 /*break*/, 7];
-                case 6:
-                    error_1 = _a.sent();
-                    console.error("Error:", error_1);
-                    return [3 /*break*/, 7];
-                case 7: return [2 /*return*/];
+                    react_hot_toast_1["default"].success('User added successfully');
+                })["catch"](function (error) {
+                    console.error('Error:', error);
+                    // toast.error('Error adding user');
+                });
+                react_hot_toast_1["default"].promise(response, {
+                    loading: 'Adding user...',
+                    success: 'User added successfully',
+                    error: 'Error adding user'
+                });
+                // if (response.ok) {
+                //   const responseData = await response.json();
+                //   console.log(responseData);
+                // } else {
+                //   console.error('Error:', response.statusText);
+                // }
             }
+            catch (error) {
+                console.error("Error:", error);
+            }
+            return [2 /*return*/];
         });
     }); };
     return (React.createElement(material_1.Grid, { container: true, spacing: 3 },
@@ -160,7 +169,6 @@ var UserAdd = function () {
                             React.createElement(material_1.InputLabel, { shrink: true, htmlFor: "file-input" }, "Image"),
                             React.createElement(material_1.Input, { id: "file-input", type: "file", onChange: handleImageChange }))),
                     React.createElement("br", null),
-                    React.createElement(material_1.Button, { variant: "contained", color: "primary", sx: { marginBottom: "5px" }, onClick: handleAdd }, "Add"))),
-            React.createElement(react_hot_toast_1["default"], { position: "bottom-right" }))));
+                    React.createElement(material_1.Button, { variant: "contained", color: "primary", sx: { marginBottom: "5px" }, onClick: handleAdd }, "Add"))))));
 };
 exports["default"] = UserAdd;
