@@ -75,5 +75,6 @@ export default function RootLayout({
         </Container>
       </PageWrapper>
     </MainWrapper>
+    
   );
 }
