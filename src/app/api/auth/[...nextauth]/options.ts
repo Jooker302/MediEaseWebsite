@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import MongoDB from "@/libs/MongoDB";
 import User from "@/models/User";
 import bcrypt from 'bcryptjs';
+// import Router from 'next/router'
 
 
 
@@ -27,15 +28,20 @@ export const options: NextAuthOptions = {
 
         if (!user) {
           throw new Error("User not registered");
+          // return new Response(JSON.stringify({ message: "User Not Found!" }), { status: 400 });
         }
         if (user.role !== "Admin"){
+          // return new Response(JSON.stringify({ message: "User Not Found!" }), { status: 400 });
           throw new Error("Admin Allowed Only");
+          // Router.push('/403')
+          // return new Response(JSON.stringify({ message: "User Registered Success!" }), { status: 200 });
           // notFound()
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
+          // return new Response(JSON.stringify({ message: "User Not Found!" }), { status: 400 });
           throw new Error("Invalid Password");
 
         }

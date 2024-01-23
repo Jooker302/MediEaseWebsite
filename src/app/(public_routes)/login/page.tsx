@@ -6,21 +6,26 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react"
 import { Props } from "react-apexcharts";
-// import { Props } from "next/dist/client/script";
-// import { useSession } from "next-auth/react";
-// import SignInImage as '../../../public/auth/images/signin-image.jpg';
+import { toast } from 'react-hot-toast';
 
 function Login(props : Props) {
-  // const session = useSession();
-  // console.log(session)
-  // if(session.data === null){
-  //   console.log("working")
-  // }
+ 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e : any) => {
     e.preventDefault();
+    var fields = true;
+    if(email == ""){
+      toast.error("Email is Required");
+      fields = false;
+    }
+    if(password == ""){
+      toast.error("Password is Required");
+      fields = false;
+    }
+
+    if(fields){
     const result = await signIn("credentials",{
       email : email,
       password: password,
@@ -28,9 +33,15 @@ function Login(props : Props) {
       callbackUrl: props.callBackUrl ?? "http://localhost:3000/",
     });
 
+    console.log(result);
+    // toast.promise(result, {
+    //   loading: 'Adding user...',
+    //   success: 'User added successfully',
+    //   error: 'Error adding user',
+    // });
+  }
 
 
-    // console.log(result);
   };
 
   return (
