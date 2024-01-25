@@ -1,3 +1,4 @@
+// import { dynamic } from 'next/dynamic';
 // pages/api/users.js
 import MongoDB from '@/libs/MongoDB';
 import User from '@/models/User';
@@ -12,3 +13,5 @@ export const GET = async () => {
     return new Response(JSON.stringify({ message: "Internal Server Error", error }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
 };
+
+export const dynamic =  "force-dynmaic";
