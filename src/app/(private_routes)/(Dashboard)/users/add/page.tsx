@@ -40,6 +40,7 @@ const UserAdd = () => {
   const [gender, setGender] = useState("Male");
   const [age, setAge] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  const [submitButton, setsubmitButton] = useState(true);
 
   const handleRoleChange = (event: SelectChangeEvent) => {
     setRole(event.target.value as string);
@@ -58,7 +59,7 @@ const UserAdd = () => {
 
   const handleAdd = async (e: any) => {
     e.preventDefault();
-
+    if (submitButton) {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -71,7 +72,32 @@ const UserAdd = () => {
     }
     // formData.append("image", image);
 
+    var fields = true;
+      if (email == "") {
+        toast.error("Email is Required");
+        fields = false;
+      }
+      if (name == "") {
+        toast.error("Name is Required");
+        fields = false;
+      }
+      if (password == "") {
+        toast.error("Password is Required");
+        fields = false;
+      }
+      
+      if (gender == "") {
+        toast.error("Gender is Required");
+        fields = false;
+      }
+      if (age == "") {
+        toast.error("Age is Required");
+        fields = false;
+      }
+      
+    if(fields){
     try {
+      setsubmitButton(false);
       // Example handling response in client code
       const response = fetch("/api/auth/register", {
         method: "POST",
@@ -89,15 +115,13 @@ const UserAdd = () => {
         }),
       })
         .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error(response.statusText);
-          }
-        })
-        .then((responseData) => {
-          console.log(responseData);
-          // toast.success('User added successfully');
+          setsubmitButton(true);
+          setName("");
+          setEmail("");
+          setPassword("");
+          setGender("");
+          setAge("");
+          setImage(null);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -119,6 +143,10 @@ const UserAdd = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+  }
+} else {
+  toast.error("Wait");
+}
   };
 
   return (

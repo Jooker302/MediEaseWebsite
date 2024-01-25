@@ -24,7 +24,7 @@ function Register() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (submitButton) {
-      setsubmitButton(false);
+      
       var fields = true;
       if (email == "") {
         toast.error("Email is Required");
@@ -68,6 +68,7 @@ function Register() {
       // formData.append("image", image);
 
       if (fields) {
+        setsubmitButton(false);
         try {
           const response = fetch("/api/auth/register", {
             method: "POST",

@@ -1,7 +1,7 @@
 export { default } from "next-auth/middleware"
 // console.log("middlewale");
 export const config = {
-    matcher: ["/Dashboard", "/", "/users"]
+    matcher: ["/Dashboard", "/", "/users","/users/add"]
 };
 
 // import { withAuth } from 'next-auth/middleware'
