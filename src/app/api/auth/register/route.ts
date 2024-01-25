@@ -11,6 +11,10 @@ export const POST = async (req: any) => {
     password, image, email, age, gender, role, name,
   } = await req.json();
 
+  if (!name || !email || !age || !gender || !role || !password) {
+    return new Response(JSON.stringify({ message: "All fields are required." }), { status: 400 });
+  }
+
   try {
    
     await MongoDB();
