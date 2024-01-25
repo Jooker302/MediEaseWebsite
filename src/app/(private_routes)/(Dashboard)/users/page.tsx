@@ -15,37 +15,19 @@ import {
 } from "@mui/material";
 import axios from 'axios';
 
-
-// const users = [
-//     {
-//         id: "1",
-//         name: "Sunil Joshi",
-//         email: "admin@gmail.com",
-//         type: "Admin",
-//     },
-//     {
-//         id: "2",
-//         name: "Andrew McDownland",
-//         email: "pateint@gmail.com",
-//         type: "Patient",
-//     },
-//     {
-//         id: "3",
-//         name: "Christopher Jamil",
-//         email: "pateint@gmail.com",
-//         type: "Patient",
-//     },
-//     {
-//         id: "4",
-//         name: "Nirav Joshi",
-//         email: "doctor@gmail.com",
-//         type: "Doctor",
-//     },
-// ];
+interface UserData {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    age: number;
+    gender: string;
+    image: string;
+  }
 
 const Users = () => {
 
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<UserData[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {

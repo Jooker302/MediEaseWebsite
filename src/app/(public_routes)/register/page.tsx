@@ -13,7 +13,7 @@ function Register() {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] =  useState<File | null>(null);
   const [submitButton, setsubmitButton] = useState(true);
 
   const handleImageChange = (e: any) => {
@@ -62,7 +62,10 @@ function Register() {
       formData.append("repeatPassword", repeatPassword);
       formData.append("gender", gender);
       formData.append("age", age);
-      formData.append("image", image);
+      if (image) {
+        formData.append("image", image);
+      }
+      // formData.append("image", image);
 
       if (fields) {
         try {

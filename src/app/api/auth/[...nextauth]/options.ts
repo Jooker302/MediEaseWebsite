@@ -4,8 +4,20 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import MongoDB from "@/libs/MongoDB";
 import User from "@/models/User";
 import bcrypt from 'bcryptjs';
+import { Session } from 'next-auth';
+
 // import Router from 'next/router'
 
+interface SessionData {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    image: string;
+  };
+
+}
 
 
 export const options: NextAuthOptions = {
@@ -55,8 +67,9 @@ export const options: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, trigger, session }) {
 
-      if (user) {
-        token.role = user.role
+     
+      if (user && 'role' in user) {
+        token.role = user.role;
       }
 
       if (trigger === 'update' || session?.role || session?.name || session?.email) {
@@ -68,7 +81,7 @@ export const options: NextAuthOptions = {
 
       return token
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: Session; token: any }) {
       if (session.user) {
         const email = session.user.email;
         try {
@@ -77,19 +90,17 @@ export const options: NextAuthOptions = {
           if (sessionUser) {
             session.user.id = sessionUser._id.toString();
             session.user.name = sessionUser.name;
-            session.user.email = sessionUser.email
+            session.user.email = sessionUser.email;
             session.user.role = sessionUser.role;
           }
         } catch (error) {
-          console.error(
-            "Error fetching user session data from the database: ",
-            error
-          );
+          console.error("Error fetching user session data from the database: ", error);
         }
       }
-
+    
       return session;
     }
+    
   },
 
   pages: {
