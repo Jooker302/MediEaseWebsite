@@ -17,7 +17,7 @@ export const POST =async (req : any) => {
         await MongoDB();
     
         const user = await User.findOne({ email });
-        if (user !== null) {
+        if (!user) {
           return new Response(JSON.stringify({ message: "Email Doesn't Exists!" }), { status: 400 });
         }
 
