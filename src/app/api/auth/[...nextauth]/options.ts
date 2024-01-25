@@ -8,16 +8,16 @@ import { Session } from 'next-auth';
 
 // import Router from 'next/router'
 
-interface SessionData {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    role: string;
-    image: string;
-  };
+// interface SessionData {
+//   user: {
+//     id: string;
+//     name: string;
+//     email: string;
+//     role: string;
+//     image: string;
+//   };
 
-}
+// }
 
 
 export const options: NextAuthOptions = {

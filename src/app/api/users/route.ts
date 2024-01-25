@@ -1,4 +1,4 @@
-// import { dynamic } from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 // pages/api/users.js
 import MongoDB from '@/libs/MongoDB';
 import User from '@/models/User';
@@ -14,4 +14,4 @@ export const GET = async () => {
   }
 };
 
-export const dynamic =  "force-dynmaic";
+export const dynamic =  'force-dynamic';
