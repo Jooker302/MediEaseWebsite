@@ -1,8 +1,0 @@
-{
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/users/route": "app/api/users/route.js",
-  "/(private_routes)/(Dashboard)/page": "app/(private_routes)/(Dashboard)/page.js",
-  "/(private_routes)/(Dashboard)/reports/page": "app/(private_routes)/(Dashboard)/reports/page.js",
-  "/(private_routes)/(Dashboard)/doctor-assigned/page": "app/(private_routes)/(Dashboard)/doctor-assigned/page.js",
-  "/(private_routes)/(Dashboard)/users/page": "app/(private_routes)/(Dashboard)/users/page.js"
-}

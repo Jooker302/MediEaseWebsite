@@ -1,1 +1,0 @@
-self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/mnt/d_drive/Work/MediEaseWebsite/src/app/(private_routes)/layout\":[\"static/media/3e3cf2ee9aa3f174-s.p.woff2\"]},\"appUsingSizeAdjust\":true,\"pagesUsingSizeAdjust\":false}"
