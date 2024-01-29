@@ -7,7 +7,7 @@ export const GET = async () => {
   await MongoDB();
 
   try {
-    const users = await User.find({ role:'Patient' });
+    const users = await User.find({ role:'Doctor' });
     return new Response(JSON.stringify({ data: users }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
     return new Response(JSON.stringify({ message: "Internal Server Error", error }), { status: 500, headers: { 'Content-Type': 'application/json' } });

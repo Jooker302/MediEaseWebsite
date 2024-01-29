@@ -1,0 +1,132 @@
+"use client";
+
+import React, { useState, useEffect} from 'react';
+import { Grid, Link, Paper } from "@mui/material";
+import BaseCard from '@/app/(private_routes)/(Dashboard)/components/shared/BaseCard';
+import {
+    Typography,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    TableContainer,
+    Button,
+} from "@mui/material";
+import axios from 'axios';
+
+interface UserData {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    age: number;
+    gender: string;
+    image: string;
+  }
+
+const Users = () => {
+
+    const [users, setUsers] = useState<UserData[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('/api/doctors');
+                setUsers(response.data.data);
+
+            } catch (error) {
+                console.error('Error fetching doctors:', error);
+            }
+        };
+
+        fetchData();
+    }, []); 
+
+    return (
+        <Grid container spacing={0}>
+            <Grid item xs={12} lg={12}>
+            <BaseCard title="Doctors" action={<Link href="/users/add"><Button variant="contained" color="primary" sx={{marginBottom:'5px'}}>
+            Add Doctor
+              </Button></Link>}>
+                <TableContainer
+                    sx={{
+                        width: "100%", // Set width to 100%
+                    }}
+                >
+                    <Table
+                        aria-label="simple table"
+                        sx={{
+                            whiteSpace: "nowrap",
+                            mt: 2,
+                        }}
+                    >
+                        <TableHead>
+                            <TableRow>
+                                
+                                <TableCell>
+                                    <Typography color="textSecondary" variant="h6">
+                                        Name
+                                    </Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography color="textSecondary" variant="h6">
+                                        Email
+                                    </Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography color="textSecondary" variant="h6">
+                                        Type
+                                    </Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography color="textSecondary" variant="h6">
+                                        Age
+                                    </Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography color="textSecondary" variant="h6">
+                                        Gender
+                                    </Typography>
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {users.map((user) => (
+                                <TableRow key={user.id}>
+                                    
+                                    <TableCell>
+                                        <Typography color="textSecondary" variant="h6">
+                                            {user.name}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography color="textSecondary" variant="h6">
+                                            {user.email}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell >
+                                        <Typography variant="h6">{user.role}</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography fontSize="15px" fontWeight={500}>
+                                            {user.age}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography fontSize="15px" fontWeight={500}>
+                                            {user.gender}
+                                        </Typography>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </BaseCard>
+            </Grid>
+        </Grid>
+    );
+};
+
+export default Users;

@@ -1,5 +1,5 @@
 import {
-  IconBoxMultiple, IconCircleDot, IconHome, IconInfoCircle, IconLayout, IconLayoutGrid, IconPhoto, IconPoint, IconStar, IconTable, IconUser, IconUsers
+  IconBoxMultiple, IconCircleDot, IconBuildingHospital,IconHome, IconInfoCircle, IconLayout, IconLayoutGrid, IconPhoto, IconPoint, IconStar, IconTable, IconUser, IconUsers
 } from "@tabler/icons-react";
 
 import { uniqueId } from "lodash";
@@ -23,6 +23,12 @@ const Menuitems = [
     title: "Users",
     icon: IconUsers,
     href: "/users",
+  },
+  {
+    id: uniqueId(),
+    title: "Doctors",
+    icon: IconBuildingHospital,
+    href: "/doctors",
   },
   {
     id: uniqueId(),
