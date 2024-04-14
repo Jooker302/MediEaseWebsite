@@ -28,7 +28,7 @@ export const POST =async (req : any) => {
         //   throw new Error("Invalid Password");
         }
 
-        return new Response(JSON.stringify({ message: "User Found!", user: user  }), { status: 200 });
+        return new Response(JSON.stringify({ message: "Login Successful!", user: user  }), { status: 200 });
 
 
     }catch(err){

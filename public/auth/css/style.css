@@ -165,7 +165,7 @@ input[type=radio] {
   -ms-appearance: radio !important; }
 
 img {
-  max-width: 100%;
+  max-width: 85%;
   height: auto; }
 
 figure {
@@ -186,7 +186,7 @@ h2 {
   font-size: 36px; }
 
 .main {
-  background: #f8f8f8;
+  background: #b0e0e6;
   padding: 50px; }
 
 .clear {
@@ -196,12 +196,13 @@ body {
   font-size: 13px;
   line-height: 1.8;
   color: #fff;
-  background: #f8f8f8;
+  /* background: #f8f8f8; */
+  background: #b0e0e6;
   font-weight: 400;
   font-family: Poppins; }
 
 .container {
-  width: 900px;
+  /* width: 900px; */
   background: #03C9D7;
   margin: auto;
   box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
@@ -258,7 +259,23 @@ body {
 
 .signup-form, .signup-image, .signin-form, .signin-image {
   width: 50%;
-  overflow: hidden; }
+  overflow: hidden; 
+
+}
+.signin-image, .signup-image{
+display: flex;
+flex-direction: column;
+align-items: center;
+
+}
+
+.signin-form{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
 
 .signup-image {
   margin: 0 55px; }
@@ -314,6 +331,8 @@ figure {
 .form-group {
   position: relative;
   margin-bottom: 25px;
+  justify-content: center;
+  display: flex;
   overflow: hidden; }
   .form-group:last-child {
     margin-bottom: 0px; }
@@ -565,7 +584,8 @@ label.valid {
     -ms-justify-content: center; }
 
   .form-button {
-    text-align: center; }
+    text-align: center;
+  }
 
   .signin-form {
     order: 1;
