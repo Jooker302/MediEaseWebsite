@@ -42,7 +42,7 @@ export const POST = async (req: any) => {
       "smoking_history_not current": smoking_history_not_current,
     };
 
-    //   console.log(data);
+      console.log(data);
 
     // Make the POST request to the prediction API
     const predictionResponse = await fetch("http://127.0.0.1:5000/predict", {
