@@ -1,8 +1,4 @@
-import { NextApiRequest } from "next";
-// import dynamic from 'next/dynamic';
-// pages/api/users.js
 import MongoDB from "@/libs/MongoDB";
-import User from "@/models/User";
 import UserReport from "@/models/UserReport";
 
 export const POST = async (req: any) => {
@@ -12,13 +8,8 @@ export const POST = async (req: any) => {
     } = await req.json();
 
     await MongoDB();
-    // console.log("", params);
-    // console.log("User ID:", user_id);
 
     const userReport = await UserReport.findOne({ _id: userRecordId });
-    // console.log(userReport);
-  
-
 
     const data = {
       age: userReport.age,
