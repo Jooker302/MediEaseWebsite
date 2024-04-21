@@ -11,12 +11,12 @@ const Menuitems = [
     icon: IconHome,
     href: "/",
   },
-  {
-    id: uniqueId(),
-    title: "Doctor Assigned",
-    icon: IconHome,
-    href: "/doctor-assigned",
-  },
+  // {
+  //   id: uniqueId(),
+  //   title: "Doctor Assigned",
+  //   icon: IconHome,
+  //   href: "/doctor-assigned",
+  // },
  
   {
     id: uniqueId(),

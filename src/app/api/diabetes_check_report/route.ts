@@ -32,7 +32,7 @@ export const POST = async (req: any) => {
       // console.log(data);
 
     // Make the POST request to the prediction API
-    const predictionResponse = await fetch("http://127.0.0.1:5000/predict", {
+    const predictionResponse = await fetch("http://127.0.0.1:5000/predict/diabetes", {
       method: "POST",
       headers: {
         // 'Content-Type': 'application/json'

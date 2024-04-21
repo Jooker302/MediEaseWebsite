@@ -14,9 +14,10 @@ export const GET = async ( request: NextRequest) => {
 
     const formatted_user_reports = user_reports.map(report => ({
       id: report._id,
+      user_id: report.user_id,
       title: report.label,
       date: formatDate(report.created_at), // Assuming formatDate is a function to format the date
-      image: `require('../images/default_user_profile.jpg')`,
+      // image: `require('../images/default_user_profile.jpg')`,
     }));
     return new Response(JSON.stringify({ data: formatted_user_reports }), { status: 200, headers: { 'Content-Type': 'application/json' } });
     // return new Response(JSON.stringify({ data: user_reports }), { status: 200, headers: { 'Content-Type': 'application/json' } });
