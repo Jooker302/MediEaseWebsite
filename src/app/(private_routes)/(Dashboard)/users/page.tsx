@@ -16,7 +16,7 @@ import {
 import axios from 'axios';
 
 interface UserData {
-    id: string;
+    _id: string;
     name: string;
     email: string;
     role: string;
@@ -63,7 +63,11 @@ const Users = () => {
                     >
                         <TableHead>
                             <TableRow>
-                                
+                            <TableCell>
+                                    <Typography color="textSecondary" variant="h6">
+                                        ID
+                                    </Typography>
+                                </TableCell>
                                 <TableCell>
                                     <Typography color="textSecondary" variant="h6">
                                         Name
@@ -93,8 +97,12 @@ const Users = () => {
                         </TableHead>
                         <TableBody>
                             {users.map((user) => (
-                                <TableRow key={user.id}>
-                                    
+                                <TableRow key={user._id}>
+                                    <TableCell>
+                                        <Typography color="textSecondary" variant="h6">
+                                            {user._id}
+                                        </Typography>
+                                    </TableCell>
                                     <TableCell>
                                         <Typography color="textSecondary" variant="h6">
                                             {user.name}
