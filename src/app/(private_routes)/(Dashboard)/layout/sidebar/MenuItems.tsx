@@ -1,5 +1,5 @@
 import {
-  IconBoxMultiple, IconCircleDot, IconBuildingHospital,IconHome, IconInfoCircle, IconLayout, IconLayoutGrid, IconPhoto, IconPoint, IconStar, IconTable, IconUser, IconUsers
+  IconBoxMultiple, IconCircleDot, IconBuildingHospital,IconHome, IconReportMedical , IconMessagePlus, IconStethoscope ,IconInfoCircle, IconLayout, IconLayoutGrid, IconPhoto, IconPoint, IconStar, IconTable, IconUser, IconUsers
 } from "@tabler/icons-react";
 
 import { uniqueId } from "lodash";
@@ -11,13 +11,6 @@ const Menuitems = [
     icon: IconHome,
     href: "/",
   },
-  // {
-  //   id: uniqueId(),
-  //   title: "Doctor Assigned",
-  //   icon: IconHome,
-  //   href: "/doctor-assigned",
-  // },
- 
   {
     id: uniqueId(),
     title: "Users",
@@ -27,13 +20,19 @@ const Menuitems = [
   {
     id: uniqueId(),
     title: "Doctors",
-    icon: IconBuildingHospital,
+    icon: IconStethoscope,
     href: "/doctors",
   },
   {
     id: uniqueId(),
     title: "Reports",
-    icon: IconUsers,
+    icon: IconReportMedical,
+    href: "/reports",
+  },
+  {
+    id: uniqueId(),
+    title: "Chat Request",
+    icon: IconMessagePlus,
     href: "/reports",
   },
 ];
