@@ -27,7 +27,7 @@ export const POST = async (req: NextRequest) => {
       doctor_id: appointment.doctor_id,
     };
 
-    return new NextResponse(JSON.stringify({ data: formattedAppointment }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    return new NextResponse(JSON.stringify({ data: formattedAppointment, message: "Success" }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
     return new NextResponse(JSON.stringify({ message: 'Internal Server Error', error }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
