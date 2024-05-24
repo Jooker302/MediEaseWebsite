@@ -25,6 +25,7 @@ export const POST = async (req: any) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("Based 64 Image is : " , image)
     const newUser = new User({
       email,
       name,
