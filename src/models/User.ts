@@ -27,11 +27,10 @@ const UserSchema = new Schema({
     },
     image: {
         type: String,
-        dafault: "",
+        default: "",
     }
-})
+});
 
-
-const User = mongoose.models?.User || mongoose.model("User", UserSchema);
+const User = models?.User || model("User", UserSchema);
 
 export default User;
