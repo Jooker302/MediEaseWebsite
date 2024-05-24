@@ -33,7 +33,8 @@ const Menuitems = [
     id: uniqueId(),
     title: "Chat Request",
     icon: IconMessagePlus,
-    href: "/reports",
+    href: "/chat-request",
+    
   },
 ];
 
