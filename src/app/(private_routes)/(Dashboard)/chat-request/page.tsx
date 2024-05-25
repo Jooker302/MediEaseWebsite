@@ -20,6 +20,7 @@ interface AppointmentData {
     user_id: string;
     created_at: string;
     user_name?: string;
+    doctor_id?: string;
 }
 
 interface DoctorData {
@@ -31,7 +32,7 @@ const Appointments = () => {
     const [appointments, setAppointments] = useState<AppointmentData[]>([]);
     const [doctors, setDoctors] = useState<DoctorData[]>([]);
     const [selectedAppointment, setSelectedAppointment] = useState<AppointmentData | null>(null);
-    const [selectedDoctor, setSelectedDoctor] = useState<string>('');
+    const [selectedDoctor, setSelectedDoctor] = useState<string>(''); // Default to empty string to avoid undefined
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -91,10 +92,11 @@ const Appointments = () => {
         if (!selectedAppointment || !selectedDoctor) return;
 
         try {
-            await axios.put(`/api/chat/${selectedAppointment.id}/assign-doctor`, {
+            await axios.post('/api/chat/assign-doctor', {
+                appointment_id: selectedAppointment.id,
                 doctor_id: selectedDoctor
             });
-            console.log("rrrr");
+            console.log("Doctor assigned");
 
             setAppointments((prevAppointments) =>
                 prevAppointments.map((appointment) =>
