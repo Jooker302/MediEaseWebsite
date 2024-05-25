@@ -56,7 +56,7 @@ export const POST = async (req: NextRequest) => {
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (error) {
-    return new NextResponse(JSON.stringify({ message: 'Internal Server Error', error: error.message }), {
+    return new NextResponse(JSON.stringify({ message: 'Internal Server Error', error: error }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });

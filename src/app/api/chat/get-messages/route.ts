@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     const messages = await Message.find({
-      sender_id: user_id,
+      // sender_id: user_id,
       appointment_id: appointment_id,
     });
 
