@@ -3,7 +3,7 @@ import Appointment from '@/models/Appointment';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
 
-export const POST = async (req: NextApiRequest) => {
+export const POST = async (req: any) => {
   await connectMongo();
 
   try {
