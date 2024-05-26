@@ -1,15 +1,13 @@
-// pages/api/chat/assign-doctor.js
-
-import MongoDB from '@/libs/MongoDB';
+import connectMongo from '@/libs/MongoDB';
 import Appointment from '@/models/Appointment';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'PUT') {
+  if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  await MongoDB();
+  await connectMongo();
 
   try {
     const { appointment_id, doctor_id } = req.body;
