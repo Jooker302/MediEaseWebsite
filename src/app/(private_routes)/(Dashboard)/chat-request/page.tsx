@@ -29,8 +29,6 @@ interface DoctorData {
     name: string;
 }
 
-// let temp_id;
-
 const Appointments = () => {
     const [appointments, setAppointments] = useState<AppointmentData[]>([]);
     const [doctors, setDoctors] = useState<DoctorData[]>([]);
@@ -38,51 +36,50 @@ const Appointments = () => {
     const [selectedDoctor, setSelectedDoctor] = useState<string>(''); // Default to empty string to avoid undefined
     const [open, setOpen] = useState(false);
 
+    const fetchData = async () => {
+        try {
+            const appointmentsResponse = await axios.get('/api/chat/chat-request');
+            const fetchedAppointments = appointmentsResponse.data.data;
+
+            console.log('Fetched Appointments:', fetchedAppointments);
+
+            // Fetch user details for each appointment
+            const userPromises = fetchedAppointments.map(async (appointment: AppointmentData) => {
+                try {
+                    const userResponse = await axios.get(`/api/users?id=${appointment.user_id}`);
+                    console.log('User Response for Appointment:', appointment.id, userResponse.data);
+
+                    return {
+                        ...appointment,
+                        user_name: userResponse.data.name
+                    };
+                } catch (error) {
+                    console.error(`Error fetching user data for user_id ${appointment.user_id}:`, error);
+                    return {
+                        ...appointment,
+                        user_name: 'Unknown'
+                    };
+                }
+            });
+
+            const appointmentsWithUserNames = await Promise.all(userPromises);
+            console.log('Appointments with User Names:', appointmentsWithUserNames);
+
+            setAppointments(appointmentsWithUserNames);
+
+            const doctorsResponse = await axios.get('/api/doctors');
+            console.log(doctorsResponse.data);
+            setDoctors(doctorsResponse.data.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const appointmentsResponse = await axios.get('/api/chat/chat-request');
-                const fetchedAppointments = appointmentsResponse.data.data;
-
-                console.log('Fetched Appointments:', fetchedAppointments);
-
-                // Fetch user details for each appointment
-                const userPromises = fetchedAppointments.map(async (appointment: AppointmentData) => {
-                    try {
-                        const userResponse = await axios.get(`/api/users?id=${appointment.user_id}`);
-                        console.log('User Response for Appointment:', appointment.id, userResponse.data);
-
-                        return {
-                            ...appointment,
-                            user_name: userResponse.data.name
-                        };
-                    } catch (error) {
-                        console.error(`Error fetching user data for user_id ${appointment.user_id}:`, error);
-                        return {
-                            ...appointment,
-                            user_name: 'Unknown'
-                        };
-                    }
-                });
-
-                const appointmentsWithUserNames = await Promise.all(userPromises);
-                console.log('Appointments with User Names:', appointmentsWithUserNames);
-
-                setAppointments(appointmentsWithUserNames);
-
-                const doctorsResponse = await axios.get('/api/doctors');
-                console.log(doctorsResponse.data);
-                setDoctors(doctorsResponse.data.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
         fetchData();
     }, []);
 
     const handleOpen = (appointment: AppointmentData) => {
-        // temp_id = appointment.id;
         setSelectedAppointment(appointment);
         setOpen(true);
     };
@@ -97,21 +94,19 @@ const Appointments = () => {
         if (!selectedAppointment || !selectedDoctor) return;
 
         try {
-            await axios.post('/api/chat/assign-doctor', {
+            const response = await axios.post('/api/chat/assign-doctor', {
                 appointment_id: selectedAppointment.id,
                 doctor_id: selectedDoctor
             });
-            console.log("Doctor assigned");
 
-            setAppointments((prevAppointments) =>
-                prevAppointments.map((appointment) =>
-                    appointment.id === selectedAppointment.id
-                        ? { ...appointment, doctor_id: selectedDoctor }
-                        : appointment
-                )
-            );
+            if (response.status === 200) {
+                console.log("Doctor assigned");
 
-            handleClose();
+                // Re-fetch appointments after successful assignment
+                await fetchData();
+
+                handleClose();
+            }
         } catch (error) {
             console.error('Error assigning doctor:', error);
         }
@@ -220,7 +215,6 @@ const Appointments = () => {
                             <MenuItem key={doctor._id} value={doctor._id}>
                                 {doctor.name}
                             </MenuItem>
-                        
                         ))}
                     </TextField>
                     <Button variant="contained" color="primary" onClick={handleAssignDoctor} fullWidth>
