@@ -24,9 +24,12 @@ interface AppointmentData {
 }
 
 interface DoctorData {
+    _id: string;
     id: string;
     name: string;
 }
+
+// let temp_id;
 
 const Appointments = () => {
     const [appointments, setAppointments] = useState<AppointmentData[]>([]);
@@ -68,6 +71,7 @@ const Appointments = () => {
                 setAppointments(appointmentsWithUserNames);
 
                 const doctorsResponse = await axios.get('/api/doctors');
+                console.log(doctorsResponse.data);
                 setDoctors(doctorsResponse.data.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -78,6 +82,7 @@ const Appointments = () => {
     }, []);
 
     const handleOpen = (appointment: AppointmentData) => {
+        // temp_id = appointment.id;
         setSelectedAppointment(appointment);
         setOpen(true);
     };
@@ -212,9 +217,10 @@ const Appointments = () => {
                         margin="normal"
                     >
                         {doctors.map((doctor) => (
-                            <MenuItem key={doctor.id} value={doctor.id}>
+                            <MenuItem key={doctor._id} value={doctor._id}>
                                 {doctor.name}
                             </MenuItem>
+                        
                         ))}
                     </TextField>
                     <Button variant="contained" color="primary" onClick={handleAssignDoctor} fullWidth>
