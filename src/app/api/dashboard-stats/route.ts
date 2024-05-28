@@ -1,19 +1,16 @@
-// pages/api/dashboard-stats.js
+// src/app/api/dashboard-stats/route.ts
 
+import { NextRequest, NextResponse } from 'next/server';
 import MongoDB from '@/libs/MongoDB';
 import User from '@/models/User';
 import ChatRequest from '@/models/Appointment';
 
-export default async function dashboardStats(req, res) {
-    if (req.method !== 'GET') {
-        return res.status(405).json({ error: 'Method Not Allowed' });
-    }
-
+export async function GET(req: NextRequest) {
     await MongoDB();
 
     try {
         // Count the number of users with role 'User'
-        const userCount = await User.countDocuments({ role: 'User' });
+        const userCount = await User.countDocuments({ role: 'Patient' });
 
         // Count the number of doctors with role 'Doctor'
         const doctorCount = await User.countDocuments({ role: 'Doctor' });
@@ -21,13 +18,13 @@ export default async function dashboardStats(req, res) {
         // Count the number of chat requests where doctor_id is null
         const chatRequestCount = await ChatRequest.countDocuments({ doctor_id: null });
 
-        return res.status(200).json({
+        return NextResponse.json({
             users: userCount,
             doctors: doctorCount,
             chatRequests: chatRequestCount
         });
     } catch (error) {
         console.error('Error fetching dashboard stats:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return new NextResponse('Internal Server Error', { status: 500 });
     }
 }
