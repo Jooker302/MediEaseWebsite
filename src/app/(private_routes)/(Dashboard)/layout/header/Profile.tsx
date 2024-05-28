@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import Link from "next/link";
-import { signOut } from 'next-auth/react';
-
-
+import { signOut, useSession } from 'next-auth/react';
 import {
   Box,
   Menu,
@@ -16,17 +14,15 @@ import {
   List,
   ListItemText,
 } from "@mui/material";
-
 import { Stack } from "@mui/system";
 import {
   IconChevronDown,
-  IconCreditCard,
-  IconCurrencyDollar,
-  IconMail,
-  IconShield,
 } from "@tabler/icons-react";
 
 const Profile = () => {
+  const { data: session } = useSession();
+  const userName = session?.user?.name || "Guest";
+
   const [anchorEl2, setAnchorEl2] = useState(null);
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
@@ -42,34 +38,6 @@ const Profile = () => {
   const errorlight = theme.palette.error.light;
   const success = theme.palette.success.main;
   const successlight = theme.palette.success.light;
-
-  /*profile data*/
-  const profiledata = [
-    {
-      href: "/",
-      title: "My Profile",
-      subtitle: "Account Settings",
-      icon: <IconCurrencyDollar width="20" height="20" />,
-      color: primary,
-      lightcolor: primarylight,
-    },
-    {
-      href: "/",
-      title: "My Inbox",
-      subtitle: "Messages & Emails",
-      icon: <IconShield width="20" height="20" />,
-      color: success,
-      lightcolor: successlight,
-    },
-    {
-      href: "/",
-      title: "My Tasks",
-      subtitle: "To-do and Daily Tasks",
-      icon: <IconCreditCard width="20" height="20" />,
-      color: error,
-      lightcolor: errorlight,
-    },
-  ];
 
   return (
     <Box>
@@ -118,7 +86,7 @@ const Profile = () => {
               ml: 1,
             }}
           >
-            Sadia
+            {userName}
           </Typography>
           <IconChevronDown width="20" height="20" />
         </Box>
@@ -143,24 +111,14 @@ const Profile = () => {
           },
         }}
       >
-
         <Box pt={0}>
-
           <List>
-            <ListItemButton component="a" href="#">
-              <ListItemText primary="Edit Profile" />
-            </ListItemButton>
-            <ListItemButton component="a" href="#">
-              <ListItemText primary="Account" />
-            </ListItemButton>
-            <ListItemButton component="a" href="#">
-              <ListItemText primary="Change Password" />
-            </ListItemButton>
-            <ListItemButton component="a" href="#">
-              <ListItemText primary="My Settings" />
-            </ListItemButton>
+            <Link href="/my-profile" passHref>
+              <ListItemButton component="a">
+                <ListItemText primary="My Profile" />
+              </ListItemButton>
+            </Link>
           </List>
-
         </Box>
         <Divider />
         <Box mt={2}>
@@ -168,7 +126,6 @@ const Profile = () => {
             Logout
           </Button>
         </Box>
-
       </Menu>
     </Box>
   );
