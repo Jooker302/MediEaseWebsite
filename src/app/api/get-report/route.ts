@@ -1,33 +1,39 @@
-// pages/api/dashboard-stats.js
+import connectMongo from '@/libs/MongoDB';
+import UserReport from '@/models/UserReport';
+import { NextRequest, NextResponse } from 'next/server';
 
-import MongoDB from '@/libs/MongoDB';
-import User from '@/models/User';
-import ChatRequest from '@/models/Appointment';
+export const POST = async (req: NextRequest) => {
+  await connectMongo();
 
-export default async function dashboardStats(req, res) {
-    if (req.method !== 'GET') {
-        return res.status(405).json({ error: 'Method Not Allowed' });
+  try {
+    const { report_id } = await req.json();
+
+    if (!report_id) {
+      return new NextResponse(JSON.stringify({ message: 'report_id is required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    await MongoDB();
+    const report = await UserReport.findOne({ _id: report_id });
 
-    try {
-        // Count the number of users with role 'User'
-        const userCount = await User.countDocuments({ role: 'User' });
-
-        // Count the number of doctors with role 'Doctor'
-        const doctorCount = await User.countDocuments({ role: 'Doctor' });
-
-        // Count the number of chat requests where doctor_id is null
-        const chatRequestCount = await ChatRequest.countDocuments({ doctor_id: null });
-
-        return res.status(200).json({
-            users: userCount,
-            doctors: doctorCount,
-            chatRequests: chatRequestCount
-        });
-    } catch (error) {
-        console.error('Error fetching dashboard stats:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+    if (!report) {
+      return new NextResponse(JSON.stringify({ message: 'No report record found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
-}
+
+    return new NextResponse(JSON.stringify({ data: report }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    return new NextResponse(JSON.stringify({ message: 'Internal Server Error', error }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+};
+
+export const dynamic = 'force-dynamic';

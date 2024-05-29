@@ -21,7 +21,7 @@ import {
 
 const Profile = () => {
   const { data: session } = useSession();
-  const userName = session?.user?.name || "Guest";
+  const userName = session?.user?.name || "Admin";
 
   const [anchorEl2, setAnchorEl2] = useState(null);
   const handleClick2 = (event: any) => {
