@@ -2,11 +2,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 import MongoDB from "@/libs/MongoDB";
 import User from "@/models/User";
+import { NextResponse } from 'next/server';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== 'PUT') {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+
+export const POST = async (req: any) => {
+  
 
   // Connect to MongoDB
   await MongoDB();
@@ -16,14 +16,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Validate input
     if (!email || !name || (password && password !== confirmPassword)) {
-      return res.status(400).json({ error: "Invalid input" });
+      return new NextResponse(JSON.stringify({ error: "Invalid input" }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     // Find the user by email
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return new NextResponse(JSON.stringify({  error: "User not found" }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     
@@ -36,9 +42,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     await user.save();
 
-    return res.status(200).json({ message: "Profile updated successfully" });
+    return new NextResponse(JSON.stringify({ message: "Profile updated successfully" }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
   } catch (error) {
     console.error("Error updating user profile:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return new NextResponse(JSON.stringify({ error: "Internal Server Error" }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 };
