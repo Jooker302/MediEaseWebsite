@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect} from 'react';
-import { Grid, Link, Paper } from "@mui/material";
+import { Grid, Link, Paper, CircularProgress } from "@mui/material";
 import BaseCard from '@/app/(private_routes)/(Dashboard)/components/shared/BaseCard';
 import {
     Typography,
@@ -28,20 +28,30 @@ interface UserData {
 const Users = () => {
 
     const [users, setUsers] = useState<UserData[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('/api/users');  // Replace with your actual API endpoint
                 setUsers(response.data.data);
-
             } catch (error) {
                 console.error('Error fetching users:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchData();
-    }, []); 
+    }, []);
+
+    if (loading) {
+        return (
+            <Grid container spacing={0} justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
+                <CircularProgress />
+            </Grid>
+        );
+    } 
 
     return (
         <Grid container spacing={0}>
