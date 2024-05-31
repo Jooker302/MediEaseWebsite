@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect} from 'react';
-import { Grid, Link, Paper } from "@mui/material";
+import { Grid, Link, Paper, CircularProgress } from "@mui/material";
 import BaseCard from '@/app/(private_routes)/(Dashboard)/components/shared/BaseCard';
 import {
     Typography,
@@ -28,6 +28,8 @@ interface UserData {
 const Users = () => {
 
     const [users, setUsers] = useState<UserData[]>([]);
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,6 +39,8 @@ const Users = () => {
 
             } catch (error) {
                 console.error('Error fetching doctors:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -92,7 +96,14 @@ const Users = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {users.map((user) => (
+                                {loading ? (
+                                    <TableRow key="loading">
+                                        <TableCell colSpan={6} align="center">
+                                            <CircularProgress />
+                                        </TableCell>
+                                    </TableRow>
+                                ) : (
+                                    users.map((user) => (
                                 <TableRow key={user.id}>
                                     
                                     <TableCell>
@@ -119,7 +130,7 @@ const Users = () => {
                                         </Typography>
                                     </TableCell>
                                 </TableRow>
-                            ))}
+                            )))}
                         </TableBody>
                     </Table>
                 </TableContainer>

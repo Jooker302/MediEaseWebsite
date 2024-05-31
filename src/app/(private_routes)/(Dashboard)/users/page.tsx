@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Link, Paper, CircularProgress } from "@mui/material";
 import BaseCard from '@/app/(private_routes)/(Dashboard)/components/shared/BaseCard';
 import {
@@ -23,7 +23,7 @@ interface UserData {
     age: number;
     gender: string;
     image: string;
-  }
+}
 
 const Users = () => {
 
@@ -45,103 +45,107 @@ const Users = () => {
         fetchData();
     }, []);
 
-    if (loading) {
-        return (
-            <Grid container spacing={0} justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
-                <CircularProgress />
-            </Grid>
-        );
-    } 
-
     return (
         <Grid container spacing={0}>
             <Grid item xs={12} lg={12}>
-            <BaseCard title="Users" action={<Link href="/users/add"><Button variant="contained" color="primary" sx={{marginBottom:'5px'}}>
-            Add User
-              </Button></Link>}>
-                <TableContainer
-                    sx={{
-                        width: "100%", // Set width to 100%
-                    }}
-                >
-                    <Table
-                        aria-label="simple table"
+                <BaseCard title="Users" action={
+                    <Link href="/users/add">
+                        <Button variant="contained" color="primary" sx={{ marginBottom: '5px' }}>
+                            Add User
+                        </Button>
+                    </Link>
+                }>
+                    <TableContainer
                         sx={{
-                            whiteSpace: "nowrap",
-                            mt: 2,
+                            width: "100%", // Set width to 100%
                         }}
                     >
-                        <TableHead>
-                            <TableRow>
-                            <TableCell>
-                                    <Typography color="textSecondary" variant="h6">
-                                        ID
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography color="textSecondary" variant="h6">
-                                        Name
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography color="textSecondary" variant="h6">
-                                        Email
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography color="textSecondary" variant="h6">
-                                        Type
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography color="textSecondary" variant="h6">
-                                        Age
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography color="textSecondary" variant="h6">
-                                        Gender
-                                    </Typography>
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {users.map((user) => (
-                                <TableRow key={user._id}>
+                        <Table
+                            aria-label="simple table"
+                            sx={{
+                                whiteSpace: "nowrap",
+                                mt: 2,
+                            }}
+                        >
+                            <TableHead>
+                                <TableRow>
                                     <TableCell>
                                         <Typography color="textSecondary" variant="h6">
-                                            {user._id}
+                                            ID
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
                                         <Typography color="textSecondary" variant="h6">
-                                            {user.name}
+                                            Name
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
                                         <Typography color="textSecondary" variant="h6">
-                                            {user.email}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell >
-                                        <Typography variant="h6">{user.role}</Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography fontSize="15px" fontWeight={500}>
-                                            {user.age}
+                                            Email
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <Typography fontSize="15px" fontWeight={500}>
-                                            {user.gender}
+                                        <Typography color="textSecondary" variant="h6">
+                                            Type
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography color="textSecondary" variant="h6">
+                                            Age
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography color="textSecondary" variant="h6">
+                                            Gender
                                         </Typography>
                                     </TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </BaseCard>
+                            </TableHead>
+                            <TableBody>
+                                {loading ? (
+                                    <TableRow key="loading">
+                                        <TableCell colSpan={6} align="center">
+                                            <CircularProgress />
+                                        </TableCell>
+                                    </TableRow>
+                                ) : (
+                                    users.map((user) => (
+                                        <TableRow key={user._id}>
+                                            <TableCell>
+                                                <Typography color="textSecondary" variant="h6">
+                                                    {user._id}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Typography color="textSecondary" variant="h6">
+                                                    {user.name}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Typography color="textSecondary" variant="h6">
+                                                    {user.email}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell >
+                                                <Typography variant="h6">{user.role}</Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Typography fontSize="15px" fontWeight={500}>
+                                                    {user.age}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Typography fontSize="15px" fontWeight={500}>
+                                                    {user.gender}
+                                                </Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </BaseCard>
             </Grid>
         </Grid>
     );

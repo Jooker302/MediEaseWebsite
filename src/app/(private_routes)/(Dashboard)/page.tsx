@@ -32,9 +32,9 @@ const Dashboard = () => {
           doctors: data.doctors || 0,
           chatRequests: data.chatRequests || 0,
         });
-        setLoading(false);
       } catch (error) {
         setError((error as Error).message);
+      } finally {
         setLoading(false);
       }
     };
@@ -46,75 +46,87 @@ const Dashboard = () => {
     <PageContainer title="Dashboard" description="This is the Dashboard">
       <Box mt={3}>
         <Grid container spacing={3}>
-          {/* ------------------------- Title Row ------------------------- */}
           <Grid item xs={12} lg={12}>
             <Typography variant="h4" component="h1" gutterBottom>
               Dashboard
             </Typography>
           </Grid>
 
-          {/* ------------------------- Cards Row ------------------------- */}
-          {loading ? (
-            <Grid item xs={12} lg={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <CircularProgress />
-            </Grid>
-          ) : error ? (
+          <Grid item xs={12} lg={4}>
+            <Link href="/users" passHref>
+              <CardActionArea component="a">
+                <Card sx={{ backgroundColor: '#FFCDD2' }}>
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      Users
+                    </Typography>
+                    {loading ? (
+                      <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+                        <CircularProgress />
+                      </Box>
+                    ) : (
+                      <Typography variant="h4" component="div">
+                        {counts.users}
+                      </Typography>
+                    )}
+                  </CardContent>
+                </Card>
+              </CardActionArea>
+            </Link>
+          </Grid>
+          
+          <Grid item xs={12} lg={4}>
+            <Link href="/doctors" passHref>
+              <CardActionArea component="a">
+                <Card sx={{ backgroundColor: '#C8E6C9' }}>
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      Doctors
+                    </Typography>
+                    {loading ? (
+                      <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+                        <CircularProgress />
+                      </Box>
+                    ) : (
+                      <Typography variant="h4" component="div">
+                        {counts.doctors}
+                      </Typography>
+                    )}
+                  </CardContent>
+                </Card>
+              </CardActionArea>
+            </Link>
+          </Grid>
+          
+          <Grid item xs={12} lg={4}>
+            <Link href="/chat-requests" passHref>
+              <CardActionArea component="a">
+                <Card sx={{ backgroundColor: '#BBDEFB' }}>
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      Chat Requests
+                    </Typography>
+                    {loading ? (
+                      <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+                        <CircularProgress />
+                      </Box>
+                    ) : (
+                      <Typography variant="h4" component="div">
+                        {counts.chatRequests}
+                      </Typography>
+                    )}
+                  </CardContent>
+                </Card>
+              </CardActionArea>
+            </Link>
+          </Grid>
+          
+          {error && (
             <Grid item xs={12} lg={12}>
-              <Typography variant="h6" color="error" component="div">
+              <Typography variant="h6" color="error" component="div" style={{ textAlign: 'center', marginTop: '20px' }}>
                 Error: {error}
               </Typography>
             </Grid>
-          ) : (
-            <>
-              <Grid item xs={12} lg={4}>
-                <Link href="/users" passHref>
-                  <CardActionArea component="a">
-                    <Card sx={{ backgroundColor: '#FFCDD2' }}>
-                      <CardContent>
-                        <Typography variant="h5" component="div">
-                          Users
-                        </Typography>
-                        <Typography variant="h4" component="div">
-                          {counts.users}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </CardActionArea>
-                </Link>
-              </Grid>
-              <Grid item xs={12} lg={4}>
-                <Link href="/doctors" passHref>
-                  <CardActionArea component="a">
-                    <Card sx={{ backgroundColor: '#C8E6C9' }}>
-                      <CardContent>
-                        <Typography variant="h5" component="div">
-                          Doctors
-                        </Typography>
-                        <Typography variant="h4" component="div">
-                          {counts.doctors}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </CardActionArea>
-                </Link>
-              </Grid>
-              <Grid item xs={12} lg={4}>
-                <Link href="/chat-requests" passHref>
-                  <CardActionArea component="a">
-                    <Card sx={{ backgroundColor: '#BBDEFB' }}>
-                      <CardContent>
-                        <Typography variant="h5" component="div">
-                          Chat Requests
-                        </Typography>
-                        <Typography variant="h4" component="div">
-                          {counts.chatRequests}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </CardActionArea>
-                </Link>
-              </Grid>
-            </>
           )}
         </Grid>
       </Box>

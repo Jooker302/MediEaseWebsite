@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Grid, Paper, Modal, Box, TextField, MenuItem } from "@mui/material";
+import { Grid, Paper, Modal, Box, TextField, MenuItem, CircularProgress } from "@mui/material";
 import BaseCard from '@/app/(private_routes)/(Dashboard)/components/shared/BaseCard';
 import {
     Typography,
@@ -35,8 +35,10 @@ const Appointments = () => {
     const [selectedAppointment, setSelectedAppointment] = useState<AppointmentData | null>(null);
     const [selectedDoctor, setSelectedDoctor] = useState<string>(''); // Default to empty string to avoid undefined
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const fetchData = async () => {
+        setLoading(true);
         try {
             const appointmentsResponse = await axios.get('/api/chat/chat-request');
             const fetchedAppointments = appointmentsResponse.data.data;
@@ -72,6 +74,8 @@ const Appointments = () => {
             setDoctors(doctorsResponse.data.data);
         } catch (error) {
             console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -153,30 +157,38 @@ const Appointments = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {appointments.map((appointment) => (
-                                    <TableRow key={appointment.id}>
-                                        <TableCell>
-                                            <Typography color="textSecondary" variant="h6">
-                                                {appointment.id}
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography color="textSecondary" variant="h6">
-                                                {appointment.user_name || 'Loading...'}
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography fontSize="15px" fontWeight={500}>
-                                                {new Date(appointment.created_at).toLocaleDateString()}
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Button variant="contained" color="primary" onClick={() => handleOpen(appointment)}>
-                                                Assign Doctor
-                                            </Button>
+                                {loading ? (
+                                    <TableRow>
+                                        <TableCell colSpan={4} align="center">
+                                            <CircularProgress />
                                         </TableCell>
                                     </TableRow>
-                                ))}
+                                ) : (
+                                    appointments.map((appointment) => (
+                                        <TableRow key={appointment.id}>
+                                            <TableCell>
+                                                <Typography color="textSecondary" variant="h6">
+                                                    {appointment.id}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Typography color="textSecondary" variant="h6">
+                                                    {appointment.user_name || 'Loading...'}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Typography fontSize="15px" fontWeight={500}>
+                                                    {new Date(appointment.created_at).toLocaleDateString()}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button variant="contained" color="primary" onClick={() => handleOpen(appointment)}>
+                                                    Assign Doctor
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                )}
                             </TableBody>
                         </Table>
                     </TableContainer>

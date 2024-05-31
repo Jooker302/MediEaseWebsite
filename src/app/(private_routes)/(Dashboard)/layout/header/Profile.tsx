@@ -11,12 +11,13 @@ import {
   Button,
   IconButton,
   ListItemButton,
-  List,
   ListItemText,
+  List,
 } from "@mui/material";
-import { Stack } from "@mui/system";
 import {
   IconChevronDown,
+  IconUser,
+  IconLogout,
 } from "@tabler/icons-react";
 
 const Profile = () => {
@@ -24,7 +25,7 @@ const Profile = () => {
   const userName = session?.user?.name || "Admin";
 
   const [anchorEl2, setAnchorEl2] = useState(null);
-  const handleClick2 = (event: any) => {
+  const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
   };
   const handleClose2 = () => {
@@ -33,11 +34,6 @@ const Profile = () => {
 
   const theme = useTheme();
   const primary = theme.palette.primary.main;
-  const primarylight = theme.palette.primary.light;
-  const error = theme.palette.error.main;
-  const errorlight = theme.palette.error.light;
-  const success = theme.palette.success.main;
-  const successlight = theme.palette.success.light;
 
   return (
     <Box>
@@ -115,16 +111,25 @@ const Profile = () => {
           <List>
             <Link href="/my-profile" passHref>
               <ListItemButton component="a">
-                <ListItemText primary="My Profile" />
+                <IconButton size="small">
+                  <IconUser sx={{ color: "black" }} />
+                </IconButton>
+                <ListItemText primary={<Typography sx={{ color: "black" }}>My Profile</Typography>} />
               </ListItemButton>
             </Link>
           </List>
         </Box>
         <Divider />
         <Box mt={2}>
-          <Button fullWidth onClick={() => signOut()} variant="contained" color="primary">
-            Logout
-          </Button>
+            <Button
+              onClick={() => signOut()}
+              fullWidth
+              variant="outlined"
+              color="primary"
+              startIcon={<IconLogout />}
+            >
+              Logout
+            </Button>
         </Box>
       </Menu>
     </Box>

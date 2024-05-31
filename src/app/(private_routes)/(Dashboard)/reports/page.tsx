@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Grid } from "@mui/material";
+import { Grid, CircularProgress } from "@mui/material";
 import BaseCard from '@/app/(private_routes)/(Dashboard)/components/shared/BaseCard';
 import {
     Typography,
@@ -73,7 +73,7 @@ const Reports = () => {
                                 {loading ? (
                                     <TableRow key="test">
                                         <TableCell colSpan={4} align="center">
-                                            <Typography>Loading...</Typography>
+                                            <CircularProgress />
                                         </TableCell>
                                     </TableRow>
                                 ) : (
