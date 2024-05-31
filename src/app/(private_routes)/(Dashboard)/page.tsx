@@ -55,7 +55,7 @@ const Dashboard = () => {
           <Grid item xs={12} lg={4}>
             <Link href="/users" passHref>
               <CardActionArea component="a">
-                <Card sx={{ backgroundColor: '#FFCDD2' }}>
+                <Card sx={{ backgroundColor: '#BBDEFB' }}>
                   <CardContent>
                     <Typography variant="h5" component="div">
                       Users
@@ -99,9 +99,9 @@ const Dashboard = () => {
           </Grid>
           
           <Grid item xs={12} lg={4}>
-            <Link href="/chat-requests" passHref>
+            <Link href="/chat-request" passHref>
               <CardActionArea component="a">
-                <Card sx={{ backgroundColor: '#BBDEFB' }}>
+                <Card sx={{ backgroundColor: '#FFCDD2' }}>
                   <CardContent>
                     <Typography variant="h5" component="div">
                       Chat Requests

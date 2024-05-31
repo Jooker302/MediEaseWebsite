@@ -24,8 +24,8 @@ const Profile = () => {
   const { data: session } = useSession();
   const userName = session?.user?.name || "Admin";
 
-  const [anchorEl2, setAnchorEl2] = useState(null);
-  const handleClick2 = (event) => {
+  const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
+  const handleClick2 = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl2(event.currentTarget);
   };
   const handleClose2 = () => {
@@ -87,9 +87,6 @@ const Profile = () => {
           <IconChevronDown width="20" height="20" />
         </Box>
       </IconButton>
-      {/* ------------------------------------------- */}
-      {/* Message Dropdown */}
-      {/* ------------------------------------------- */}
       <Menu
         id="msgs-menu"
         anchorEl={anchorEl2}
@@ -103,7 +100,7 @@ const Profile = () => {
             width: "360px",
             p: 2,
             pb: 2,
-            pt:0
+            pt: 0
           },
         }}
       >
@@ -112,24 +109,24 @@ const Profile = () => {
             <Link href="/my-profile" passHref>
               <ListItemButton component="a">
                 <IconButton size="small">
-                  <IconUser sx={{ color: "black" }} />
+                  <IconUser color="black" />
                 </IconButton>
-                <ListItemText primary={<Typography sx={{ color: "black" }}>My Profile</Typography>} />
+                <ListItemText primary={<Typography color="textPrimary">My Profile</Typography>} />
               </ListItemButton>
             </Link>
           </List>
         </Box>
         <Divider />
         <Box mt={2}>
-            <Button
-              onClick={() => signOut()}
-              fullWidth
-              variant="outlined"
-              color="primary"
-              startIcon={<IconLogout />}
-            >
-              Logout
-            </Button>
+          <Button
+            onClick={() => signOut()}
+            fullWidth
+            variant="outlined"
+            color="primary"
+            startIcon={<IconLogout />}
+          >
+            Logout
+          </Button>
         </Box>
       </Menu>
     </Box>
