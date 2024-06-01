@@ -171,12 +171,12 @@ const Appointments = () => {
                                                     {new Date(appointment.created_at).toLocaleDateString()}
                                                 </Typography>
                                             </TableCell>
-                                            <TableCell align="center">
+                                            <TableCell>
                                                 <Typography color="textSecondary" variant="h6">
                                                     {appointment.doctor_name || '-'}
                                                 </Typography>
                                             </TableCell>
-                                            <TableCell align="center">
+                                            <TableCell>
                                                 {appointment.doctor_id ? (
                                                     '-'
                                                 ) : (
