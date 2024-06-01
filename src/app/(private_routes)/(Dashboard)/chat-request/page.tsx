@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Grid, Paper, Modal, Box, TextField, MenuItem, CircularProgress } from "@mui/material";
+import { Grid, Modal, Box, TextField, MenuItem, CircularProgress } from "@mui/material";
 import BaseCard from '@/app/(private_routes)/(Dashboard)/components/shared/BaseCard';
 import {
     Typography,
@@ -14,6 +14,7 @@ import {
     Button,
 } from "@mui/material";
 import axios from 'axios';
+import { toast, Toaster } from 'react-hot-toast';
 
 interface AppointmentData {
     id: string;
@@ -21,6 +22,7 @@ interface AppointmentData {
     created_at: string;
     user_name?: string;
     doctor_id?: string;
+    doctor_name?: string;
 }
 
 interface DoctorData {
@@ -36,6 +38,7 @@ const Appointments = () => {
     const [selectedDoctor, setSelectedDoctor] = useState<string>(''); // Default to empty string to avoid undefined
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [assigning, setAssigning] = useState(false);
 
     const fetchData = async () => {
         setLoading(true);
@@ -45,33 +48,11 @@ const Appointments = () => {
 
             console.log('Fetched Appointments:', fetchedAppointments);
 
-            // Fetch user details for each appointment
-            const userPromises = fetchedAppointments.map(async (appointment: AppointmentData) => {
-                try {
-                    const userResponse = await axios.get(`/api/users?id=${appointment.user_id}`);
-                    console.log('User Response for Appointment:', appointment.id, userResponse.data);
-
-                    return {
-                        ...appointment,
-                        user_name: userResponse.data.name
-                    };
-                } catch (error) {
-                    console.error(`Error fetching user data for user_id ${appointment.user_id}:`, error);
-                    return {
-                        ...appointment,
-                        user_name: 'Unknown'
-                    };
-                }
-            });
-
-            const appointmentsWithUserNames = await Promise.all(userPromises);
-            console.log('Appointments with User Names:', appointmentsWithUserNames);
-
-            setAppointments(appointmentsWithUserNames);
-
             const doctorsResponse = await axios.get('/api/doctors');
-            console.log(doctorsResponse.data);
-            setDoctors(doctorsResponse.data.data);
+            const fetchedDoctors = doctorsResponse.data.data;
+            setDoctors(fetchedDoctors);
+
+            setAppointments(fetchedAppointments);
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
@@ -97,6 +78,7 @@ const Appointments = () => {
     const handleAssignDoctor = async () => {
         if (!selectedAppointment || !selectedDoctor) return;
 
+        setAssigning(true);
         try {
             const response = await axios.post('/api/chat/assign-doctor', {
                 appointment_id: selectedAppointment.id,
@@ -104,7 +86,7 @@ const Appointments = () => {
             });
 
             if (response.status === 200) {
-                console.log("Doctor assigned");
+                toast.success("Doctor assigned successfully");
 
                 // Re-fetch appointments after successful assignment
                 await fetchData();
@@ -113,6 +95,9 @@ const Appointments = () => {
             }
         } catch (error) {
             console.error('Error assigning doctor:', error);
+            toast.error("Error assigning doctor");
+        } finally {
+            setAssigning(false);
         }
     };
 
@@ -151,6 +136,11 @@ const Appointments = () => {
                                     </TableCell>
                                     <TableCell>
                                         <Typography color="textSecondary" variant="h6">
+                                            Assigned Doctor
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography color="textSecondary" variant="h6">
                                             Action
                                         </Typography>
                                     </TableCell>
@@ -159,7 +149,7 @@ const Appointments = () => {
                             <TableBody>
                                 {loading ? (
                                     <TableRow>
-                                        <TableCell colSpan={4} align="center">
+                                        <TableCell colSpan={5} align="center">
                                             <CircularProgress />
                                         </TableCell>
                                     </TableRow>
@@ -181,10 +171,19 @@ const Appointments = () => {
                                                     {new Date(appointment.created_at).toLocaleDateString()}
                                                 </Typography>
                                             </TableCell>
-                                            <TableCell>
-                                                <Button variant="contained" color="primary" onClick={() => handleOpen(appointment)}>
-                                                    Assign Doctor
-                                                </Button>
+                                            <TableCell align="center">
+                                                <Typography color="textSecondary" variant="h6">
+                                                    {appointment.doctor_name || '-'}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                {appointment.doctor_id ? (
+                                                    '-'
+                                                ) : (
+                                                    <Button variant="contained" color="primary" onClick={() => handleOpen(appointment)}>
+                                                        Assign Doctor
+                                                    </Button>
+                                                )}
                                             </TableCell>
                                         </TableRow>
                                     ))
@@ -222,6 +221,7 @@ const Appointments = () => {
                         onChange={(e) => setSelectedDoctor(e.target.value)}
                         fullWidth
                         margin="normal"
+                        disabled={assigning}
                     >
                         {doctors.map((doctor) => (
                             <MenuItem key={doctor._id} value={doctor._id}>
@@ -229,11 +229,19 @@ const Appointments = () => {
                             </MenuItem>
                         ))}
                     </TextField>
-                    <Button variant="contained" color="primary" onClick={handleAssignDoctor} fullWidth>
-                        Assign
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleAssignDoctor}
+                        fullWidth
+                        disabled={assigning}
+                    >
+                        {assigning ? <CircularProgress size={24} /> : "Assign"}
                     </Button>
                 </Box>
             </Modal>
+
+            <Toaster />
         </Grid>
     );
 };
