@@ -118,12 +118,12 @@ export async function POST(req: Request) {
   }
 }
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '4mb', // Adjust the limit if necessary
-    },
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: {
+//       sizeLimit: '4mb', // Adjust the limit if necessary
+//     },
+//   },
+// };
 
 export const dynamic = 'force-dynamic';
