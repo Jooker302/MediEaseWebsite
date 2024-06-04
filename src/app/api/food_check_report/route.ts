@@ -19,7 +19,7 @@ export const POST = async (req: any) => {
 
     // Make the POST request to the prediction API
     const predictionResponse = await fetch(
-      "http://127.0.0.1:5000/predict/dietplan",
+      "https://flutterdevelopers.tech/python/predict/dietplan",
       {
         method: "POST",
         headers: {

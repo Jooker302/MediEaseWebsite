@@ -58,25 +58,25 @@ export const POST = async (req: any) => {
       );
     }
 
-    const data = {
-      user_id,
-      label,
-      age,
-      hypertension,
-      heart_disease,
-      bmi,
-      HbA1c_level,
-      blood_glucose_level,
-      gender_Female,
-      gender_Male,
-      gender_Other,
-      "smoking_history_No Info": smoking_history_No_Info,
-      smoking_history_current,
-      smoking_history_ever,
-      smoking_history_former,
-      smoking_history_never,
-      "smoking_history_not current": smoking_history_not_current,
-    };
+    // const data = {
+    //   user_id,
+    //   label,
+    //   age,
+    //   hypertension,
+    //   heart_disease,
+    //   bmi,
+    //   HbA1c_level,
+    //   blood_glucose_level,
+    //   gender_Female,
+    //   gender_Male,
+    //   gender_Other,
+    //   "smoking_history_No Info": smoking_history_No_Info,
+    //   smoking_history_current,
+    //   smoking_history_ever,
+    //   smoking_history_former,
+    //   smoking_history_never,
+    //   "smoking_history_not current": smoking_history_not_current,
+    // };
 
     // console.log(data);
 
