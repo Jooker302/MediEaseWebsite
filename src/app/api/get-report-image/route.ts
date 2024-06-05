@@ -16,6 +16,14 @@ interface ParsedData {
   [key: string]: string | undefined;
 }
 
+// export const runtime = {
+//   api: {
+//     bodyParser: {
+//       sizeLimit: '4mb', // Adjust the limit if necessary
+//     },
+//   },
+// };
+
 const parseBloodReport = (text: string): ParsedData => {
   const lines = text.split('\n');
   const result: ParsedData = {};
