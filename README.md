@@ -32,7 +32,7 @@ MediEase Website is a web application built with Next.js to manage doctor and ad
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone <repository-url-website>
+   git clone https://github.com/Jooker302/MediEaseWebsite
    cd mediease-website
    ```
 
